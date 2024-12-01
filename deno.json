@@ -1,0 +1,10 @@
+{
+  "tasks": {
+    "dev": "deno run --watch main.ts",
+    "day": "deno run --allow-read --allow-run src/days/day$DAY/day$DAY.ts",
+    "daywatch": "deno run --allow-read --allow-run --watch src/days/day$DAY/day$DAY.ts" 
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1"
+  }
+}
