@@ -5,19 +5,17 @@ export default class Day01 extends Day {
   expectedPart1Results = () => [["sample.txt", 11]];
   expectedPart2Results = () => [["sample.txt", 31]];
 
-  part1(input: string) {
-    return input
+  part1 = (input: string) =>
+    input
       .let(parseLists)
       .let(([left, right]) => left.map((num, i) => Math.abs(num - right[i])))
       .sum();
-  }
 
-  part2(input: string) {
-    return input
+  part2 = (input: string) =>
+    input
       .let(parseLists)
-      .let(([left, right]) => left.map((num, i) => num * right.count(num)))
+      .let(([left, right]) => left.map((num) => num * right.count(num)))
       .sum();
-  }
 }
 
 const parseLists = (input: string) =>

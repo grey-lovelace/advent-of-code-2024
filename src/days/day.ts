@@ -37,7 +37,7 @@ export default abstract class Day {
       if (shouldRun) {
         const output = execute(func, inputFile);
         console.log(`${part} - ${output}\n`);
-        copy(output); // Copy output to clipboard so it is easy to paste into submit
+        copy(output).then(() => console.log(`Copied answer ${output} to clipboard!`))// Copy output to clipboard so it is easy to paste into submit
       }
     };
 
