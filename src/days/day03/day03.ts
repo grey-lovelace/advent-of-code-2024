@@ -8,16 +8,15 @@ export default class Day03 extends Day {
   part1 = multiplyNonCorrupted;
   part2 = (input: string) =>
     input
-      .split("do()")
-      .map((instruction) => instruction.split("don't()")[0])
-      .join("")
+      .replaceAll(/(?:don't\(\).*?)*(?:do\(\)|$)/gs, "")
       .let(multiplyNonCorrupted);
 }
 
 const multiplyNonCorrupted = (input: string) =>
   input
-    .matchAllAsList(/mul\(\d+,\d+\)/g)
-    .map((match) => match[0].findNumbers().product())
+    .matchAllAsList(/mul\((\d+),(\d+)\)/g)
+    .also((it) => console.log(it.length))
+    .map((match) => Number(match[1])*Number(match[2]))
     .sum();
 
 if (import.meta.main) {
