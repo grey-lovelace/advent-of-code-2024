@@ -12,7 +12,18 @@ All days are 2 digit numbers, padded with zeros if necessary. So to run the firs
 
 `DAY=01 deno task day`
 
-## A Note on Extensions
+or to rerun on file changes: 
+
+`DAY=01 deno task watchDay`
+
+## Creating a day from the template
+
+There is a template day to get you set up to start a problem.
+To create a copy of it and all files it needs, as well as rename to match the naming scheme, just run:
+
+`DAY={CURRENT_DAY_NUMBER} deno task setupDay`
+
+## A note on extensions
 
 I use prototype extensions a lot in this code to steal some of my favorite pieces from languages like Kotlin. While not a good idea in a normal application, since I am not working with other people on this codebase, let me indulge in this forbidden practice. 
 
