@@ -3,7 +3,7 @@
     "dev": "deno run --watch main.ts",
     "day": "deno run --allow-read --allow-run src/days/day$DAY/day$DAY.ts",
     "watchDay": "deno run --allow-read --allow-run --watch src/days/day$DAY/day$DAY.ts",
-    "setupDay": "cd src/days && cp -r template day$DAY  && cd day$DAY && mv daytemplate.ts day$DAY.ts && sed -i -e \"s/DayTemplate/Day$DAY/g\" day$DAY.ts",
+    "setupDay": "cd src/days && cp -r template day$DAY  && cd day$DAY && mv daytemplate.ts day$DAY.ts && sed -i -e \"s/DayTemplate/Day$DAY/g\" day$DAY.ts"
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1"
