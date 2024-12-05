@@ -5,11 +5,11 @@ export default class Day05 extends Day {
   expectedPart1Results = () => [["sample.txt", 143]];
   expectedPart2Results = () => [["sample.txt", 123]];
 
-  part1 = run
-  part2 = (input: string) => run(input, true)
+  part1 = run;
+  part2 = (input: string) => run(input, false);
 }
 
-const run = (input: string, part2 = false) => 
+const run = (input: string, persistUnchangedUpdates = true) =>
   input
     .paragraphs()
     .map((p) => p.lines())
@@ -23,35 +23,20 @@ const run = (input: string, part2 = false) =>
       updates: updates.map((update) => update.split(",")),
     }))
     .let(({ ruleMap, updates }) =>
-      updates
-        .filter((update) => part2 ? !isValid(update, ruleMap) : isValid(update, ruleMap))
-        .mapNonNull((update) => {
-          let pages = [...update];
-          while (!isValid(pages, ruleMap)) {
-            const brokenRules = pages
-              .mapNonNull((page, i) =>
-                (ruleMap[page] ?? []).find((rule) =>
-                  pages.slice(0, i).includes(rule)
-                )
-              )
-              .unique() as string[];
-            pages = pages.filter((page) => !brokenRules.includes(page));
-            pages.push(...brokenRules);
-          }
-          return pages;
-        })
+      updates.map((update) => ({
+        original: update,
+        sorted: update.toSorted((page1, page2) =>
+          (ruleMap[page1] ?? []).includes(page2) ? -1 : 1
+        ),
+      }))
     )
-    .map((update) => update[Math.floor(update.length / 2)])
+    .filter(
+      ({ original, sorted }) =>
+        (original.join(",") === sorted.join(",")) == persistUnchangedUpdates
+    )
+    .map(({ sorted }) => sorted[Math.floor(sorted.length / 2)])
     .toNums()
     .sum();
-
-const isValid = (pages: string[], ruleMap: Record<string, string[]>) =>
-  pages.every(
-    (page, i) =>
-      !(ruleMap[page] ?? []).some((required) =>
-        pages.slice(0, i).includes(required)
-      )
-  );
 
 if (import.meta.main) {
   new Day05().run();
