@@ -23,12 +23,12 @@ const findPath = (input: string, testObstacle: string = `-1,-1`) => {
     .also((grid) => grid.at(testX, testY) && (grid.at(testX, testY)!.val = "#"))
     .points.find((point) => point.val === "^")!;
   let loopFound = false;
-  const visited = new Set([[currentPoint.x, currentPoint.y, currentDir].join(",")]);
+  const visited = new Set([
+    [currentPoint.x, currentPoint.y, currentDir].join(","),
+  ]);
   while (currentPoint[currentDir]() !== undefined) {
     const nextPoint = currentPoint[currentDir]()!;
-    if (
-      visited.has([nextPoint.x, nextPoint.y, currentDir].join(","))
-    ) {
+    if (visited.has([nextPoint.x, nextPoint.y, currentDir].join(","))) {
       loopFound = true;
       break;
     } else if (nextPoint.val === "#") {
