@@ -38,18 +38,19 @@ const run = (
     point2: Point<string>
   ) => Point<string>[]
 ) => {
-  const frequencies = input.replaceAll(".", "").letters().unique();
   const grid = input.let(stringToGrid);
-  return frequencies
-    .map((fr) => grid.points.filter((p) => p.val === fr))
+  return input
+    .replaceAll(".", "")
+    .letters()
+    .unique()
+    .map((frequencies) => grid.points.filter((p) => p.val === frequencies))
     .flatMap((frPoints) =>
-      frPoints.flatMap((frp) => {
-        return frPoints
+      frPoints.flatMap((frp) =>
+        frPoints
           .filter((frp2) => !frp2.equals(frp))
-          .flatMap((frp2) => findResonantFrequencies(grid, frp, frp2));
-      })
+          .flatMap((frp2) => findResonantFrequencies(grid, frp, frp2))
+      )
     )
-    .map((point) => point?.toString())
     .unique().length;
 };
 
