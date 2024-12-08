@@ -9,10 +9,10 @@ export default class Day07 extends Day {
   part2 = (input: string) => calibrate(input, 3);
 }
 
-const operators = [
-  (a: number, b: number) => a + b,
-  (a: number, b: number) => a * b,
-  (a: number, b: number) => Number(a.toString() + b.toString()),
+const operators: ((a: number, b: number) => number)[] = [
+  (a, b) => a + b,
+  (a, b) => a * b,
+  (a, b) => Number(a.toString() + b.toString()),
 ];
 
 const calibrate = (input: string, rulesToUse = 2) =>
@@ -26,11 +26,15 @@ const calibrate = (input: string, rulesToUse = 2) =>
     .filter(({ testVal, nums }) =>
       nums
         .slice(1)
-        .reduce((acc, current) =>
-          acc.flatMap((option) =>
-            operators.slice(0, rulesToUse).map((op) => op(option, current))
-          )
-        , [nums[0]])
+        .reduce(
+          (acc, current) =>
+            acc
+              .flatMap((option) =>
+                operators.slice(0, rulesToUse).map((op) => op(option, current))
+              )
+              .filter((option) => option <= testVal),
+          [nums[0]]
+        )
         .includes(testVal)
     )
     .map((equation) => equation.testVal)
